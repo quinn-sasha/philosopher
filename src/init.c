@@ -1,4 +1,5 @@
 #include "philo.h"
+#include "utils.h"
 
 static void init_forks(t_fork *forks, const int num_forks) {
   int i = 0;

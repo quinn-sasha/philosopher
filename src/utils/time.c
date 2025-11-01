@@ -1,4 +1,5 @@
 #include "philo.h"
+#include "utils.h"
 
 /*
 t.tv_usec += offset_ms * MSEC_IN_USEC;
