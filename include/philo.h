@@ -1,3 +1,6 @@
+#ifndef PHILO_H
+#define PHILO_H
+
 #include <stdio.h>      // printf
 #include <stdlib.h>     // malloc, free
 #include <string.h>     // memset
@@ -36,6 +39,7 @@ struct s_args {
 };
 
 struct s_monitor {
+  pthread_t tid;
   pthread_mutex_t mutex;
   bool is_dead;
 };
@@ -72,3 +76,4 @@ struct s_data {
   t_philo philosophers[MAX_PHILO];
 };
 
+#endif
