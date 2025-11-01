@@ -10,9 +10,10 @@
                         // pthread_mutex_init, pthread_mutex_destroy,
                         // pthread_mutex_lock, pthread_mutex_unlock
 #include <stdbool.h>
-#include "libftsubset.h"
-#include "parse_argument.h"
-#include "utils.h"
+
+#ifndef MAX_PHILO
+#define MAX_PHILO 200
+#endif
 
 void init_data(t_data *data);
 
@@ -51,6 +52,7 @@ struct s_fork {
 
 /*
 * eat_count and last_eat_at: They need mutex because monitor reads, and philo writes them
+*   (monitor needs mutex when accessing them, but philo only needs mutex when they write them)
 * next_eat_at: private to a philosopher
 * last_sleep_at: private to a philosopher
 */
