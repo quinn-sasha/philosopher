@@ -35,6 +35,11 @@ struct s_args {
   int max_eat;
 };
 
+struct s_monitor {
+  pthread_mutex_t mutex;
+  bool is_dead;
+};
+
 struct s_fork {
   pthread_mutex_t mutex;
   int id;
@@ -62,6 +67,7 @@ struct s_data {
   t_timeval started_at;
   int optimal_interval_ms;
   t_args args;
+  t_monitor monitor;
   t_fork forks[MAX_PHILO];
   t_philo philosophers[MAX_PHILO];
 };
