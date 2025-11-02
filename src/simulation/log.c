@@ -3,7 +3,7 @@
 #include "utils.h"
 
 /*
-* It is unsafe since it accesses last_eat_at without philo's mutex.
+* It is unsafe if monitor tries to read last_eat_at without philo's mutex.
 * Return true if someone dies, otherwise false.
 */
 bool unsafe_write_log(t_philo *philo, const char *message, t_timeval *tp) {
