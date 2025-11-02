@@ -17,6 +17,7 @@ static void init_philosophers(t_data *data) {
   while (i < num_philos) {
     t_philo *philo = &data->philosophers[i];
     philo->id = i + 1;
+    philo->state = PH_SLEEPING;
     philo->eat_count = 0;
     philo->last_eat_at = data->started_at;
     philo->next_eat_at = calculate_initial_eat_at(philo->id, data);
