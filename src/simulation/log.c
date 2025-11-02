@@ -2,7 +2,8 @@
 #include "utils.h"
 
 // It needs mutex for printed_dead_log and monitor.is_dead to write them
-void unsafe_write_dead_log(t_philo *philo, t_timeval died_at) {
+// 死亡ログは一度しか表示されない
+static void unsafe_write_dead_log(t_philo *philo, t_timeval died_at) {
   static bool printed_dead_log = false;
   if (printed_dead_log)
     return;
