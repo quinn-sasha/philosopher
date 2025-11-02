@@ -52,6 +52,14 @@ static bool philo_sleep(t_philo *philo) {
   return is_end;
 }
 
+static bool philo_think(t_philo *philo) {
+  philo->state = PH_THINKING;
+  bool is_end = unsafe_write_log(philo, "is thinking", NULL);
+  if (!is_end)
+    usleep_until(philo->next_eat_at);
+  return is_end;
+}
+
 /*
 Philosopher calling unsafe_is_hungry is safe because
 no other thread tries to write it.
@@ -66,7 +74,7 @@ void *philosopher_thread(void *arg) {
     else if (philo->state == PH_EATING)
       is_end = philo_sleep(philo);
     else if (philo->state == PH_SLEEPING)
-      is_end = philo_think();
+      is_end = philo_think(philo);
     else
       return EXIT_FAILURE;
   }
