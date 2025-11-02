@@ -24,6 +24,12 @@ typedef struct s_philo t_philo;
 typedef struct s_fork t_fork;
 typedef struct s_monitor t_monitor;
 
+enum e_phstate {
+  PH_EATING,
+  PH_SLEEPING,
+  PH_THINKING,
+};
+
 /*
 * 1 <= num_philo < MAX_PHILO
 * 0 <= time_to_die_ms
@@ -59,6 +65,7 @@ struct s_fork {
 struct s_philo {
   pthread_t tid;
   int id;
+  enum e_phstate state;
   pthread_mutex_t mutex;
   int eat_count;
   t_timeval last_eat_at;
