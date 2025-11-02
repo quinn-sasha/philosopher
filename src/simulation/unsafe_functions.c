@@ -10,12 +10,12 @@ bool unsafe_is_hungry(t_philo philo) {
 
 // nowのmsec以下を切り捨てている理由は、deadlineの方ではmsecより下が切り捨てられているから
 // より比べるときの公平性が高い
-bool unsafe_is_dead(t_philo philo, t_timeval *checked_at) {
+bool unsafe_is_dead(t_philo philo, t_timeval *tp) {
   t_timeval now;
   gettimeofday(&now, NULL);
   rounddown_msec(&now);
-  if (checked_at != NULL)
-    *checked_at = now;
+  if (tp != NULL)
+    *tp = now;
   const int time_to_die_ms = philo.data->args.time_to_die_ms;
   t_timeval deadline = timeadd_msec(philo.last_eat_at, time_to_die_ms);
   suseconds_t diff = timediff_usec(now, deadline);
