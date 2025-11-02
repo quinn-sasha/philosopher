@@ -12,6 +12,8 @@ bool unsafe_is_dead(t_philo philo, t_timeval *checked_at) {
   t_timeval now;
   gettimeofday(&now, NULL);
   rounddown_msec(&now);
+  if (checked_at != NULL)
+    *checked_at = now;
   const int time_to_die_ms = philo.data->args.time_to_die_ms;
   t_timeval deadline = timeadd_msec(philo.last_eat_at, time_to_die_ms);
   suseconds_t diff = timediff_usec(now, deadline);
