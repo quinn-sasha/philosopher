@@ -11,3 +11,8 @@ void usleep_until(t_timeval end) {
     usleep(useconds_t(diff / 2));
   }
 }
+
+void usleep_since(t_timeval start, int length_ms) {
+  t_timeval end = timeadd_msec(start, length_ms);
+  usleep_until(end);
+}

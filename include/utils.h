@@ -13,5 +13,6 @@ void rounddown_msec(t_timeval *tp);
 
 // sleep.c
 void usleep_until(t_timeval end);
+void usleep_since(t_timeval start, int length_ms);
 
 #endif
