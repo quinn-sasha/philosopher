@@ -11,4 +11,7 @@ int timediff_msec(t_timeval start, t_timeval end);
 suseconds_t timediff_usec(t_timeval start, t_timeval end);
 void rounddown_msec(t_timeval *tp);
 
+// sleep.c
+void usleep_until(t_timeval end);
+
 #endif
