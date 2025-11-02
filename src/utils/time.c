@@ -14,9 +14,16 @@ t_timeval timeadd_msec(t_timeval t, int offset_ms) {
   return t;
 }
 
-int timediff_usec(t_timeval start, t_timeval end) {
+int timediff_msec(t_timeval start, t_timeval end) {
+  int diff = 0;
+  diff += (int)(end.tv_sec - start.tv_sec) * SEC_IN_MSEC;
+  diff += (end.tv_usec - start.tv_usec) / MSEC_IN_USEC;
+  return diff;
+}
+
+suseconds_t timediff_usec(t_timeval start, t_timeval end) {
   suseconds_t diff = 0;
-  diff += (end.tv_sec - start.tv_sec) * SEC_IN_USEC;
+  diff += (suseconds_t)(end.tv_sec - start.tv_sec) * SEC_IN_USEC;
   diff += end.tv_usec - start.tv_usec;
   return diff;
 }
