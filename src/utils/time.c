@@ -13,3 +13,15 @@ t_timeval timeadd_msec(t_timeval t, int offset_ms) {
   t.tv_usec %= SEC_IN_USEC;
   return t;
 }
+
+int timediff_usec(t_timeval start, t_timeval end) {
+  suseconds_t diff = 0;
+  diff += (end.tv_sec - start.tv_sec) * SEC_IN_USEC;
+  diff += end.tv_usec - start.tv_usec;
+  return diff;
+}
+
+void rounddown_msec(t_timeval *tp) {
+  tp->tv_usec /= MSEC_IN_USEC;
+  tp->tv_usec *= MSEC_IN_USEC;
+}
