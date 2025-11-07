@@ -1,5 +1,6 @@
 #include "philo.h"
 #include "parse_argument.h"
+#include "libftsubset.h"
 
 static bool is_numeric(char *str) {
   if (*str == '\0')
