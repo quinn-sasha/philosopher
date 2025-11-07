@@ -18,5 +18,6 @@ bool unsafe_write_log(t_philo *philo, const char *message, t_timeval *tp);
 
 // simulation.c
 void start_simulation(t_data *data);
+void wait_simulation_ends(t_data data);
 
 #endif

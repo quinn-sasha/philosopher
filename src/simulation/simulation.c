@@ -15,17 +15,27 @@ static void create_philosophers_thread(t_philo *philo) {
   }
 }
 
+static void cleanup_mutex(t_data data) {
+  pthread_mutex_destroy(&data.monitor.mutex);
+  int i = 0;
+  while (i < data.args.num_philo) {
+    pthread_mutex_destroy(&data.philosophers[i].mutex);
+    pthread_mutex_destroy(&data.forks[i].mutex);
+    i++;
+  }
+}
+
 void start_simulation(t_data *data) {
   create_monitor_thread(data);
   create_philosophers_thread(data->philosophers);
 }
 
 void wait_simulation_ends(t_data data) {
-  const int num_philo = data.args.num_philo;
   pthread_join(data.monitor.tid, NULL);
   int i = 0;
-  while (i < num_philo) {
+  while (i < data.args.num_philo) {
     pthread_join(data.philosophers[i].tid, NULL);
     i++;
   }
+  cleanup_mutex(data);
 }
