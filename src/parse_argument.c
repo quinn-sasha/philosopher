@@ -17,9 +17,12 @@ static bool is_numeric(char *str) {
 static int get_non_negative_int(const char *str) {
   if (!is_numeric(str))
     return -1;
-  if (ft_strcmp(str, INT_MAX_STRING) > 0)
+  long result = ft_strtol(str, NULL, 10);
+  if (errno == ERANGE)
     return -1;
-  return ft_atoi(str);
+  if (result > INT_MAX || result < INT_MIN)
+    return -1;
+  return (int)result;
 }
 
 // Reference: https://github.com/usatie/philosophers/blob/master/philo/src/argsparse/argsparse.c
