@@ -32,13 +32,14 @@ static int usage_error(void) {
 		"  - number_of_philosophers is valid between 1 to MAX_PHILO.\n"
 		"    (Default value for MAX_PHILO is 200.)\n"
 		"  - number_of_times_each_philosopher_must_eat must be non-zero\n"
-		"    value. When it is negative or not specified, the simulation\n"
+		"    value. When it is not specified, the simulation\n"
 		"    does not end until someone dies.\n"
 		"VALID EXAMPLE:\n"
 		"  ./philo 5 500 100 100\n"
 		"  ./philo 5 500 100 100 10\n"
 		"INVALID EXAMPLE:\n"
 		"  ./philo 5 500 100\n"
+    "  ./philo 5 500 100 100 -10"
 		"  ./philo 5 500 100 100 10 100\n"
 		"  ./philo 5 9999999999999999 100 100 10\n",
 		STDERR_FILENO);
