@@ -14,7 +14,6 @@ SRCS := $(SRC_DIR)/main.c \
         $(SRC_DIR)/libftsubset/ft_isdigit.c \
         $(SRC_DIR)/libftsubset/ft_putchar_fd.c \
         $(SRC_DIR)/libftsubset/ft_putstr_fd.c \
-        $(SRC_DIR)/libftsubset/ft_strcmp.c \
 				$(SRC_DIR)/utils/time.c \
 				$(SRC_DIR)/parse_argument.c \
 				$(SRC_DIR)/init.c \
