@@ -20,3 +20,12 @@ void start_simulation(t_data *data) {
   create_philosophers_thread(data->philosophers);
 }
 
+void wait_simulation_ends(t_data data) {
+  const int num_philo = data.args.num_philo;
+  pthread_join(data.monitor.tid, NULL);
+  int i = 0;
+  while (i < num_philo) {
+    pthread_join(data.philosophers[i].tid, NULL);
+    i++;
+  }
+}
