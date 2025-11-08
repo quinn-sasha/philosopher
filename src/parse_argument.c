@@ -60,10 +60,10 @@ int parse_argsument(t_args *args, int argc, char *argv[]) {
   if (args->time_to_die_ms < 0)
     return usage_error();
   args->time_to_eat_ms = get_non_negative_int(argv[3]);
-  if (args->time_to_die_ms < 0)
+  if (args->time_to_eat_ms < 0)
     return usage_error();
   args->time_to_sleep_ms = get_non_negative_int(argv[4]);
-  if (args->time_to_die_ms < 0)
+  if (args->time_to_sleep_ms < 0)
     return usage_error();
   if (argc == MIN_NUM_ARGUMENTS) {
     args->max_eat = -1;
