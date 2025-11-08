@@ -10,7 +10,7 @@ static void preprocess_strtol(const char **str, bool *is_negative) {
     (*str)++;
 }
 
-static bool is_overflow(unsigned long current, int next_digit, int base, int is_neg) {
+static bool is_overflow(unsigned long current, unsigned long next_digit, int base, int is_neg) {
   unsigned long max_quotient;
   unsigned long max_remainder;
   if (is_neg) {
@@ -32,7 +32,7 @@ static bool internal_strtol(const char **str, int base, unsigned long *result, b
   preprocess_strtol(str, is_negative);
   *result = 0;
   while (ft_isdigit(**str)) {
-    int digit = **str - '0';
+    unsigned long digit = **str - '0';
     if (is_overflow(*result, digit, base, *is_negative))
       return true;
     *result = *result * (unsigned long)base + digit;
