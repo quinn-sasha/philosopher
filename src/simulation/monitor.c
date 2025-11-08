@@ -30,6 +30,6 @@ void *monitor_thread(void *arg) {
   while (true) {
     usleep(MONITOR_INTERVAL_IN_USEC);
     if (!should_continue_simulation(data))
-      return;
+      return NULL;
   }
 }
