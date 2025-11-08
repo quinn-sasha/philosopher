@@ -8,7 +8,7 @@ void usleep_until(t_timeval end) {
     suseconds_t diff = timediff_usec(now, end);
     if (diff <= 0)
       return;
-    usleep(useconds_t(diff / 2));
+    usleep(diff / 2);
   }
 }
 
