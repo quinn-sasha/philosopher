@@ -9,17 +9,17 @@
 */
 static bool pickup_forks(t_philo *philo) {
   bool is_end;
-  if (philo->first->id == philo->second->id)
-    return true;
   pthread_mutex_lock(&philo->first->mutex);
   is_end = unsafe_write_log(philo, "has taken a fork", NULL);
-  if (is_end)
-    pthread_mutex_unlock(&philo->first->mutex);
-  else {
+  if (philo->first->id == philo->second->id)
+    is_end = true;
+  if (!is_end) {
     pthread_mutex_lock(&philo->second->mutex);
     is_end = unsafe_write_log(philo, "has taken a fork", NULL);
-    if (is_end)
-      pthread_mutex_unlock(&philo->second->mutex);
+  }
+  if (is_end) {
+    pthread_mutex_unlock(&philo->first->mutex);
+    pthread_mutex_unlock(&philo->second->mutex);
   }
   return is_end;
 }
