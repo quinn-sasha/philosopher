@@ -6,7 +6,7 @@
 /*   By: squinn <squinn@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:51:55 by squinn            #+#    #+#             */
-/*   Updated: 2025/11/08 20:27:33 by squinn           ###   ########.fr       */
+/*   Updated: 2025/11/08 21:04:31 by squinn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static t_timeval	calc_initial_eat_at(int philo_id, t_data *data)
 	const int	start_postion = (k * philo_id) % n;
 	int			start_offset_ms;
 
-	start_offset_ms = (data->args.time_to_eat_ms / k) * start_postion;
 	if (n == 1)
 		return (data->started_at);
+	start_offset_ms = (data->args.time_to_eat_ms / k) * start_postion;
 	return (timeadd_msec(data->started_at, start_offset_ms));
 }
 
