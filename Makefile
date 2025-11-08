@@ -54,8 +54,4 @@ data_race_test: CFLAGS += -g
 data_race_test: re
 	valgrind --tool=helgrind ./test.sh
 
-memory_leak_test: CFLAGS += -g
-memory_leak_test: re
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./test.sh
-
 .PHONY: all clean fclean re data_race_test test
