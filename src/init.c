@@ -10,6 +10,21 @@ static void init_forks(t_fork *forks, const int num_forks) {
   }
 }
 
+/*
+* start_position: 各哲学者の開始時刻をIDに基づいて順位付けする
+* time_to_eat / k: 同じグループに属するk人の哲学者が time_to_eat 間で食事を始められるようにするためにずらす時間
+* start_offset_ms = 一人分のズレ幅 * 自分のスタートする順位
+*/
+static t_timeval calculate_initial_eat_at(int philo_id, t_data *data) {
+  const int n = data->args.num_philo;
+  const int k = n / 2;
+  if (n == 1)
+    return data->started_at;
+  const int start_postion = (k * philo_id) % n;
+  const int start_offset_ms = (data->args.time_to_eat_ms / k) * start_postion;
+  return timeadd_msec(data->started_at, start_offset_ms);
+}
+
 static void init_philosophers(t_data *data) {
   const int num_philos = data->args.num_philo;
   memset(data->philosophers, 0, sizeof(t_philo) * MAX_PHILO);
@@ -54,22 +69,6 @@ static int calculate_optimal_interval_ms(t_args *args) {
     return min_interval_ms;
   return result;
 }
-
-/*
-* start_position: 各哲学者の開始時刻をIDに基づいて順位付けする
-* time_to_eat / k: 同じグループに属するk人の哲学者が time_to_eat 間で食事を始められるようにするためにずらす時間
-* start_offset_ms = 一人分のズレ幅 * 自分のスタートする順位
-*/
-static t_timeval calculate_initial_eat_at(int philo_id, t_data *data) {
-  const int n = data->args.num_philo;
-  const int k = n / 2;
-  if (n == 1)
-    return data->started_at;
-  const int start_postion = (k * philo_id) % n;
-  const int start_offset_ms = (data->args.time_to_eat_ms / k) * start_postion;
-  return timeadd_msec(data->started_at, start_offset_ms);
-}
-
 // started_at を現在の1秒後に設定して、全スレッドを同時に開始させる
 void init_data(t_data *data) {
   gettimeofday(&data->started_at, NULL);
@@ -79,4 +78,3 @@ void init_data(t_data *data) {
   init_forks(data->forks, data->args.num_philo);
   init_philosophers(data);
 }
-
