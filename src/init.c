@@ -6,7 +6,7 @@
 /*   By: squinn <squinn@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:51:55 by squinn            #+#    #+#             */
-/*   Updated: 2025/11/08 19:5 by squinn           ###   ########.fr       */
+/*   Updated: 2025/11/08 20:27:33 by squinn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ static void	init_forks(t_fork *forks, const int num_forks)
 }
 
 /*
- * start_position: 各哲学者の開始時刻をIDに基づいて順位付けする
- * time_to_eat / k: 同じグループに属するk人の哲学者が time_to_eat 間で食事を始められるようにするためにずらす時間
- * start_offset_ms = 一人分のズレ幅 * 自分のスタートする順位
+ * start_position: Determines each philosopher's
+ * 		starting time based on their ID.
+ * time_to_eat / k: The time offset required to allow k philosophers
+ * 		in the same group to start eating within time_to_eat.
+ * start_offset_ms = individual offset width * your starting position rank.
  */
 static t_timeval	calc_initial_eat_at(int philo_id, t_data *data)
 {
@@ -74,12 +76,13 @@ static void	init_philosophers(t_data *data)
 }
 
 /*
-n = 2k or n = 2k + 1
-k = n / 2 (同時に食事をできる哲学者数)
-optimal				interval = time_to_eat * (n / k)
-n / k は別のタイミングで食事するグループ (だいたい 2 or 3)
-optimal				interval = time_to_eat * (n
-						/ k) (全てのグループが両方とも食事を終えるまでにかかる最低限の時間)
+* n = 2k or n = 2k + 1.
+* k = n / 2 (number of philosophers who can eat simultaneously).
+* optimal interval = time_to_eat * (n / k).
+* 	n / k represents groups of philosophers eating at different times
+* 	(typically 2 or 3 groups).
+* optimal interval = time_to_eat * (n / k)
+* 	(the minimum time required for all groups to finish eating together).
 */
 static int	calculate_optimal_interval_ms(t_args *args)
 {
@@ -96,7 +99,7 @@ static int	calculate_optimal_interval_ms(t_args *args)
 	return (result);
 }
 
-// started_at を現在の1秒後に設定して、全スレッドを同時に開始させる
+// Set started_at to one second from now to start all threads simultaneously
 void	init_data(t_data *data)
 {
 	gettimeofday(&data->started_at, NULL);

@@ -6,7 +6,7 @@
 /*   By: squinn <squinn@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 18:38:22 by squinn            #+#    #+#             */
-/*   Updated: 2025/11/08 18:42:22 by squinn           ###   ########.fr       */
+/*   Updated: 2025/11/08 20:26:25 by squinn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
 t.tv_usec += offset_ms * MSEC_IN_USEC;
-というコードは offset_ms が INT_MAX に近い時にオーバーフローが起こる可能性がある
+This operation may cause overflow when offset_ms approaches INT_MAX.
 */
 t_timeval	timeadd_msec(t_timeval t, int offset_ms)
 {
