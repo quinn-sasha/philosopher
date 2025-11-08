@@ -54,8 +54,8 @@ static void init_philosophers(t_data *data) {
 n = 2k or n = 2k + 1
 k = n / 2 (同時に食事をできる哲学者数)
 optimal interval = time_to_eat * (n / k)
-n / k ≒ 2 (or 3)
-optimal interval = time_to_eat * 2(or 3) (２つのグループが両方とも食事を終えるまでにかかる最低限の時間)
+n / k は別のタイミングで食事するグループ (だいたい 2 or 3)
+optimal interval = time_to_eat * (n / k) (全てのグループが両方とも食事を終えるまでにかかる最低限の時間)
 */
 static int calculate_optimal_interval_ms(t_args *args) {
   const int n = args->num_philo;
@@ -77,4 +77,5 @@ void init_data(t_data *data) {
   data->optimal_interval_ms = calculate_optimal_interval_ms(&data->args);
   init_forks(data->forks, data->args.num_philo);
   init_philosophers(data);
+  data->monitor.is_dead = false;
 }
