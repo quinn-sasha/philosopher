@@ -15,8 +15,6 @@
 #define MAX_PHILO 200
 #endif
 
-void init_data(t_data *data);
-
 typedef struct timeval t_timeval;
 typedef struct s_data t_data;
 typedef struct s_args t_args;
@@ -84,5 +82,7 @@ struct s_data {
   t_fork forks[MAX_PHILO];
   t_philo philosophers[MAX_PHILO];
 };
+
+void init_data(t_data *data);
 
 #endif
