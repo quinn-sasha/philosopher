@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: squinn <squinn@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 18:30:26 by squinn            #+#    #+#             */
+/*   Updated: 2025/11/08 18:30:27 by squinn           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_H
-#define UTILS_H
+# define UTILS_H
 
 // time.c
-#define MSEC_IN_USEC 1000
-#define SEC_IN_MSEC 1000
-#define SEC_IN_USEC 1000000
+# define MSEC_IN_USEC 1000
+# define SEC_IN_MSEC 1000
+# define SEC_IN_USEC 1000000
 
-t_timeval timeadd_msec(t_timeval t, int offset_ms);
-int timediff_msec(t_timeval start, t_timeval end);
-suseconds_t timediff_usec(t_timeval start, t_timeval end);
-void rounddown_msec(t_timeval *tp);
+t_timeval	timeadd_msec(t_timeval t, int offset_ms);
+int			timediff_msec(t_timeval start, t_timeval end);
+suseconds_t	timediff_usec(t_timeval start, t_timeval end);
+void		rounddown_msec(t_timeval *tp);
 
 // sleep.c
-void usleep_until(t_timeval end);
-void usleep_since(t_timeval start, int length_ms);
+void		usleep_until(t_timeval end);
+void		usleep_since(t_timeval start, int length_ms);
 
 #endif

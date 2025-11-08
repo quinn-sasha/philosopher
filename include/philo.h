@@ -1,88 +1,108 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: squinn <squinn@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 18:30:14 by squinn            #+#    #+#             */
+/*   Updated: 2025/11/08 18:30:16 by squinn           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <stdio.h>      // printf
-#include <stdlib.h>     // malloc, free
-#include <string.h>     // memset
-#include <unistd.h>     // write, usleep
-#include <sys/time.h>   // gettimeofday
-#include <pthread.h>    // pthread_create, pthread_detach, pthread_join,
-                        // pthread_mutex_init, pthread_mutex_destroy,
-                        // pthread_mutex_lock, pthread_mutex_unlock
-#include <stdbool.h>
+# include <pthread.h>  // pthread_create, pthread_detach, pthread_join,
+# include <stdio.h>    // printf
+# include <stdlib.h>   // malloc, free
+# include <string.h>   // memset
+# include <sys/time.h> // gettimeofday
+# include <unistd.h>   // write, usleep
+						// pthread_mutex_init, pthread_mutex_destroy,
+						// pthread_mutex_lock, pthread_mutex_unlock
+# include <stdbool.h>
 
-#ifndef MAX_PHILO
-#define MAX_PHILO 200
-#endif
+# ifndef MAX_PHILO
+#  define MAX_PHILO 200
+# endif
 
-typedef struct timeval t_timeval;
-typedef struct s_data t_data;
-typedef struct s_args t_args;
-typedef struct s_philo t_philo;
-typedef struct s_fork t_fork;
-typedef struct s_monitor t_monitor;
+typedef struct timeval		t_timeval;
+typedef struct s_data		t_data;
+typedef struct s_args		t_args;
+typedef struct s_philo		t_philo;
+typedef struct s_fork		t_fork;
+typedef struct s_monitor	t_monitor;
 
-enum e_phstate {
-  PH_EATING,
-  PH_SLEEPING,
-  PH_THINKING,
+enum						e_phstate
+{
+	PH_EATING,
+	PH_SLEEPING,
+	PH_THINKING,
 };
 
 /*
-* 1 <= num_philo < MAX_PHILO
-* 0 <= time_to_die_ms
-* 0 <= time_to_eat_ms
-* 0 <= time_to_sleep_ms
-* 1 <= max_eat
-*/
-struct s_args {
-  int num_philo;
-  int time_to_die_ms;
-  int time_to_eat_ms;
-  int time_to_sleep_ms;
-  int max_eat;
+ * 1 <= num_philo < MAX_PHILO
+ * 0 <= time_to_die_ms
+ * 0 <= time_to_eat_ms
+ * 0 <= time_to_sleep_ms
+ * 1 <= max_eat
+ */
+struct						s_args
+{
+	int						num_philo;
+	int						time_to_die_ms;
+	int						time_to_eat_ms;
+	int						time_to_sleep_ms;
+	int						max_eat;
 };
 
-struct s_monitor {
-  pthread_t tid;
-  pthread_mutex_t mutex;
-  bool is_dead;
+struct						s_monitor
+{
+	pthread_t				tid;
+	pthread_mutex_t			mutex;
+	bool					is_dead;
 };
 
-struct s_fork {
-  pthread_mutex_t mutex;
-  int id;
+struct						s_fork
+{
+	pthread_mutex_t			mutex;
+	int						id;
 };
 
 /*
-* eat_count and last_eat_at: They need mutex because monitor reads, and philo writes them
-*   (monitor needs mutex when accessing them, but philo only needs mutex when they write them)
-* next_eat_at: private to a philosopher
-* last_sleep_at: private to a philosopher
-*/
-struct s_philo {
-  pthread_t tid;
-  int id;
-  enum e_phstate state;
-  pthread_mutex_t mutex;
-  int eat_count;
-  t_timeval last_eat_at;
-  t_timeval next_eat_at;
-  t_timeval last_sleep_at;
-  t_fork *first;
-  t_fork *second;
-  t_data *data;
+ * eat_count and last_eat_at: They need mutex because monitor reads,
+	and philo writes them
+ *   (monitor needs mutex when accessing them,
+	but philo only needs mutex when they write them)
+ * next_eat_at: private to a philosopher
+ * last_sleep_at: private to a philosopher
+ */
+struct						s_philo
+{
+	pthread_t				tid;
+	int						id;
+	enum e_phstate			state;
+	pthread_mutex_t			mutex;
+	int						eat_count;
+	t_timeval				last_eat_at;
+	t_timeval				next_eat_at;
+	t_timeval				last_sleep_at;
+	t_fork					*first;
+	t_fork					*second;
+	t_data					*data;
 };
 
-struct s_data {
-  t_timeval started_at;
-  int optimal_interval_ms;
-  t_args args;
-  t_monitor monitor;
-  t_fork forks[MAX_PHILO];
-  t_philo philosophers[MAX_PHILO];
+struct						s_data
+{
+	t_timeval				started_at;
+	int						optimal_interval_ms;
+	t_args					args;
+	t_monitor				monitor;
+	t_fork					forks[MAX_PHILO];
+	t_philo					philosophers[MAX_PHILO];
 };
 
-void init_data(t_data *data);
+void						init_data(t_data *data);
 
 #endif
