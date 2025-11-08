@@ -8,7 +8,6 @@ CFLAGS := -Wall -Wextra -Werror -I$(INCLUDE_DIR)
 RM := rm -f
 RMDIR := rm -rf
 
-# TODO
 SRCS := $(SRC_DIR)/main.c \
         $(SRC_DIR)/libftsubset/ft_atoi.c \
         $(SRC_DIR)/libftsubset/ft_isdigit.c \
@@ -48,12 +47,15 @@ fclean: clean
 
 re: fclean all
 
-test_data_race: CC := clang
-test_data_race: CFLAGS += -fsanitize=thread -g
-test_data_race: re
+test: $(NAME)
+	./test.sh
 
-# TODO
-test: test_data_race
-./test.sh
+data_race_test: CFLAGS += -g
+data_race_test: re
+	valgrind --tool=helgrind ./test.sh
 
-.PHONY: all clean fclean re test_data_race test
+memory_leak_test: CFLAGS += -g
+memory_leak_test: re
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./test.sh
+
+.PHONY: all clean fclean re data_race_test test
