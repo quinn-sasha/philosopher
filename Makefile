@@ -14,9 +14,17 @@ SRCS := $(SRC_DIR)/main.c \
         $(SRC_DIR)/libftsubset/ft_isdigit.c \
         $(SRC_DIR)/libftsubset/ft_putchar_fd.c \
         $(SRC_DIR)/libftsubset/ft_putstr_fd.c \
+        $(SRC_DIR)/libftsubset/ft_isspace.c \
+        $(SRC_DIR)/libftsubset/ft_strtol.c \
+        $(SRC_DIR)/simulation/log.c \
+        $(SRC_DIR)/simulation/monitor.c \
+        $(SRC_DIR)/simulation/philosopher.c \
+        $(SRC_DIR)/simulation/simulation.c \
+        $(SRC_DIR)/simulation/unsafe_functions.c \
+				$(SRC_DIR)/utils/sleep.c \
 				$(SRC_DIR)/utils/time.c \
 				$(SRC_DIR)/parse_argument.c \
-				$(SRC_DIR)/init.c \
+				$(SRC_DIR)/init.c
 
 
 OBJ_DIR := objs
