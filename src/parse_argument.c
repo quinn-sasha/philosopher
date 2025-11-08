@@ -2,7 +2,7 @@
 #include "parse_argument.h"
 #include "libftsubset.h"
 
-static bool is_numeric(char *str) {
+static bool is_numeric(const char *str) {
   if (*str == '\0')
     return false;
   int i = 0;
@@ -51,8 +51,8 @@ static int usage_error(void) {
 }
 
 int parse_argsument(t_args *args, int argc, char *argv[]) {
-  if (argc != MIN_NUM_ARGUMENTS || argc != MIN_NUM_ARGUMENTS + 1)
-    return PARSE_ERROR;
+  if (argc != MIN_NUM_ARGUMENTS && argc != MIN_NUM_ARGUMENTS + 1)
+    return usage_error();
   args->num_philo = get_non_negative_int(argv[1]);
   if (args->num_philo <= 0 || args->num_philo > MAX_PHILO)
     return usage_error();
