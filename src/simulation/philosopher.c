@@ -6,7 +6,7 @@
 /*   By: squinn <squinn@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 18:37:06 by squinn            #+#    #+#             */
-/*   Updated: 2025/11/08 18:37:07 by squinn           ###   ########.fr       */
+/*   Updated: 2025/11/09 19:32:43 by squinn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,21 @@
  * Philo calling unsafe_write_log() (which reads philo->last_eat_at) is safe
  * because no other thread tries to write it.
  */
-static bool	pickup_forks(t_philo *philo)
-{
-	bool	is_end;
-
+static bool pickup_forks(t_philo *philo) {
+	bool is_end = false;
 	pthread_mutex_lock(&philo->first->mutex);
 	is_end = unsafe_write_log(philo, "has taken a fork", NULL);
-	if (philo->first->id == philo->second->id)
-		is_end = true;
-	if (!is_end)
-	{
-		pthread_mutex_lock(&philo->second->mutex);
-		is_end = unsafe_write_log(philo, "has taken a fork", NULL);
+	if (is_end || philo->first->id == philo->second->id) {
+		pthread_mutex_unlock(&philo->first->mutex);
+		return true;
 	}
-	if (is_end)
-	{
+	pthread_mutex_lock(&philo->second->mutex);
+	is_end = unsafe_write_log(philo, "has taken a fork", NULL);
+	if (is_end) {
 		pthread_mutex_unlock(&philo->first->mutex);
 		pthread_mutex_unlock(&philo->second->mutex);
 	}
-	return (is_end);
+	return is_end;
 }
 
 static bool	philo_eat(t_philo *philo)
