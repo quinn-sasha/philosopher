@@ -1,51 +1,58 @@
-# 課題要件
+Concurrent Resource Management Simulator
 
-- 哲学者の数：1一人以上
-- 哲学者の行動：
-    - 食べる、考える、寝る
-    - 一つの動作をしているときは、他の行動はできない
-    - 行動パターン: 食べ終わったら、寝て、起きたら考え始める
-- フォークの数：哲学者と同じ数
-- 食べるためには、右と左のフォークを両方掴む必要がある
-- 哲学者は食べれないと、餓死する　(もし哲学者が一人しかいなければフォークは一つしかない（つまり食べれない))
-- 禁止事項
-    - 哲学者どうして意思疎通を取ってはいけない
-    - 哲学者は餓死してはいけない
+## Overview
 
-### プログラムへの引数
+This project is a simulation demonstrating **concurrent programming**, **thread synchronization**, and **resource allocation**. It explores how to manage shared resources among multiple threads without causing deadlocks or data races, based on the classic "Dining Philosophers" problem.
 
-- number_of_philosophers: 哲学者の人数、およびフォークの総数
-- time_to_die（ミリ秒単位）: 最後の食事開始時点またはシミュレーション開始から time_to_die ミリ秒以内に食事を開始しなかった哲学者は死亡します。
-- time_to_eat（ミリ秒単位）: 哲学者が食事を完了するのに必要な時間。この期間中はフォークを2本保持している必要があります。
-- time_to_sleep（ミリ秒単位）: 哲学者が睡眠に費やす時間
-- number_of_times_each_philosopher_must_eat（任意の引数）: すべての哲学者が少なくとも number_of_times_each_philosopher_must_eat 回食事を終えた場合、シミュレーションは終了します。
+## Rules and Requirements
 
-### ログ
+- **Actors**: The simulation involves one or more actors (threads).
+- **Actions**: Each actor repeatedly performs three exclusive actions: eating, sleeping, and thinking.
+- **Routine**: After an actor finishes eating, they go to sleep. When they wake up, they start thinking.
+- **Resources (Forks)**: There are exactly as many forks as actors. To eat, an actor must successfully grab both their left and right forks.
+- **Starvation**: If an actor cannot eat within a specific timeframe, they will starve.
+    - _Note: If there is only one actor, there is only one fork available, meaning they cannot eat and will inevitably die._
+- **Constraints**:
+    - Actors must not communicate with each other.
+    - No actor should starve to death.
+    - Multiple threads cannot access the same memory area simultaneously; therefore, each fork is protected using a **mutex**.
+	
+## How to Run
 
-以下のような形式でログを残す
+### 1. Build
 
-```
-timestamp_in_ms X has taken a fork
-timestamp_in_ms X is eating
-timestamp_in_ms X is sleeping
-timestamp_in_ms X is thinking
-timestamp_in_ms X died
+Use the provided `Makefile` to compile the project.
+
+```bash
+make
 ```
 
-- 表示されたメッセージは他のメッセージと重ならないようにする
-- 哲学者の死を告知するメッセージは、実際の死亡から 10ms 以内に表示されなければならない
+### 2. Usage
 
-### プログラムの要件
+Run the compiled executable with the following arguments:
 
-- **複数のスレッドが同じメモリ領域に同時にアクセスしては行けない (各フォークを mutex で保護する必要がある）**
-- 各哲学者はスレッドとして表現される
-- 使用可能外部関数：
-    - 注意：exit 使えない
-
+```bash
+./philo <number_of_actors> <time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_actor_must_eat]
 ```
-memset, printf, malloc, free, write,
-usleep, gettimeofday, pthread_create,
-pthread_detach, pthread_join, pthread_mutex_init,
-pthread_mutex_destroy, pthread_mutex_lock,
-pthread_mutex_unlock
+
+#### Argument Details
+
+- `number_of_actors`: The number of actors (and total number of forks).
+- `time_to_die` (ms): Time limit for an actor to start their next meal before starving.
+- `time_to_eat` (ms): Time required to finish eating (requires holding two forks).
+- `time_to_sleep` (ms): Time spent sleeping after a meal.
+- `number_of_times_each_actor_must_eat` (Optional): If all actors eat at least this many times, the simulation ends.
+
+### 3. Logs
+
+The program outputs state changes in real-time:
+
+```plaintext
+[timestamp_ms] [ID] has taken a fork
+[timestamp_ms] [ID] is eating
+[timestamp_ms] [ID] is sleeping
+[timestamp_ms] [ID] is thinking
+[timestamp_ms] [ID] died
 ```
+
+_Note: Messages from different threads will not overlap, and death logs are displayed within 10ms of the event._
